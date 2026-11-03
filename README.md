@@ -1,4 +1,7 @@
 # semantic-sql-guard
+
+[![Python](https://img.shields.io/badge/python-%E2%89%A53.10-3776AB)](https://www.python.org/) [![License](https://img.shields.io/badge/license-MIT-7A8796)](#license) [![Version](https://img.shields.io/badge/v-0.1.0-555555)]() [![Tests](https://img.shields.io/badge/tests-36_passing-43853D)]()
+
 > 企业语义问数安全网关｜Text2SQL 语义层 + SQL 静态安全校验 + 行级权限拦截 + 结果异常校验
 
 > 属于【enterprise-ai-stack】B端私有化 AI 交付底座合集
@@ -66,6 +69,20 @@ curl -s localhost:8000/ask -H 'Content-Type: application/json' \
 curl -s localhost:8000/ask -H 'Content-Type: application/json' \
   -d '{"question":"今天天气怎么样","role":"national"}'
 ```
+
+## 真实运行效果（`make demo` 真实输出，节选）
+```text
+Q: 一季度华东区域营收    角色: east
+SQL: SELECT SUM(amount) AS value FROM sales WHERE quarter='2026Q1' AND region IN ('华东','华北')
+结果: 200000.0 —— 行级权限在生成阶段已注入 WHERE，只算得见范围内的数
+
+Q: 员工薪酬总额          角色: east
+状态: rejected —— 敏感表 hr_salary 仅允许角色 [hr, national] 访问（越权拦截）
+
+Q: 今天天气怎么样        角色: national
+状态: rejected —— 未匹配到已注册指标，先注册再查（不瞎编 SQL）
+```
+三个 Text2SQL 杀手一次拦住：**口径**（确定性模板）、**越权**（行级权限 + 敏感表）、**幻觉**（未注册指标拒绝）。
 
 ## 核心接口
 | 方法 | 路径 | 说明 |
