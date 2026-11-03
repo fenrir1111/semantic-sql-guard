@@ -2,7 +2,7 @@
 > 企业语义问数安全网关｜Text2SQL 语义层 + SQL 静态安全校验 + 行级权限拦截 + 结果异常校验
 
 > 属于【enterprise-ai-stack】B端私有化 AI 交付底座合集
-> 👉 总入口：https://github.com/你的用户名/enterprise-ai-stack
+> 👉 总入口：https://github.com/fenrir1111/enterprise-ai-stack
 
 ## 一句话简介
 解决 Text2SQL 投产三大杀手：**口径不一致、越权查询、幻觉危险 SQL**。
