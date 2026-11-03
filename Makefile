@@ -1,6 +1,6 @@
 PY := .venv/bin/python
 
-.PHONY: install run demo test eval docker docker-stop clean
+.PHONY: install run demo test eval ui docker docker-stop clean
 
 install: ## 创建 venv 并安装依赖
 	uv venv .venv
@@ -12,6 +12,9 @@ run: ## 本地起服务（默认 8000 端口）
 
 demo: ## 跑全链路 demo（无需起服务）
 	$(PY) -m semantic_sql_guard.demo
+
+ui: ## 起 Streamlit 可视化后台（默认 8501 端口）
+	$(PY) -m streamlit run src/semantic_sql_guard/streamlit_app.py --server.headless true --server.port 8501 --browser.gatherUsageStats false
 
 test: ## 跑测试（basetemp 指向工作区内，规避部分沙箱对系统临时目录的拦截）
 	$(PY) -m pytest -q --basetemp="$PWD/.pytest-tmp"

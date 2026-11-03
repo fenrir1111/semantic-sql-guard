@@ -84,6 +84,38 @@ Q: 今天天气怎么样        角色: national
 ```
 三个 Text2SQL 杀手一次拦住：**口径**（确定性模板）、**越权**（行级权限 + 敏感表）、**幻觉**（未注册指标拒绝）。
 
+## 系统实拍（真实运行截图）
+
+以下截图均为**本仓库真实运行**产出（`make ui` 起控制台 + `make demo` 跑全链路），未经修饰。
+
+### 1. 语义问数控制台 · 自然语言查询
+
+在控制台输入「一季度华东区域营收」、角色选 `east`，点「查询」——右侧直接看到生成 SQL 里**已经带上行级权限条件**（`region IN ('华东','华北')`），以及结果校验后的数值：
+
+![语义问数控制台查询结果](docs/screenshots/sql-guard-02-query-result.png)
+
+### 2. 语义配置 · 指标注册表（口径统一的地方）
+
+![语义配置指标注册表](docs/screenshots/sql-guard-03-semantic-registry.png)
+
+### 3. 审计日志 · 每条查询可追溯
+
+「问句 → 语义 → SQL → 结果 → 角色 → 时间」全链路留痕：
+
+![审计日志](docs/screenshots/sql-guard-04-audit.png)
+
+### 4. `make demo` 终端输出
+
+```text
+Q   : 一季度华东区域营收
+角色 : east   说明 : 注册指标命中 + 行级权限（east→华东/华北）
+状态 : answered / 结果: ok
+SQL  : SELECT SUM(amount) AS value FROM sales WHERE region = '华东' AND quarter = '2026Q1' AND region IN ('华东', '华北')
+回答 : 【区域营收】查询结果：200000.0（已按角色 east 的行级权限过滤）
+```
+
+![make demo 终端输出](docs/screenshots/semantic-sql-guard-demo-terminal.png)
+
 ## 核心接口
 | 方法 | 路径 | 说明 |
 |---|---|---|

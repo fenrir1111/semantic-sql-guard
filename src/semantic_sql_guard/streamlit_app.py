@@ -8,15 +8,22 @@
 from __future__ import annotations
 
 import json
+import sys
 from pathlib import Path
 
 import streamlit as st
 
-from .config import get_settings
-from .evaluator import format_report, run_eval
-from .pipeline import Pipeline
-from .semantic.models import Metric
-from .semantic.registry import load_registry, save_registry
+# Streamlit 以「独立脚本」方式执行本文件（无 __package__），相对导入会直接 ImportError。
+# 这里把 src/ 加入 sys.path 并改用绝对导入，保证「clone 即跑」和「已安装」两种场景都能启动。
+_SRC = Path(__file__).resolve().parents[1]
+if str(_SRC) not in sys.path:
+    sys.path.insert(0, str(_SRC))
+
+from semantic_sql_guard.config import get_settings  # noqa: E402
+from semantic_sql_guard.evaluator import format_report, run_eval  # noqa: E402
+from semantic_sql_guard.pipeline import Pipeline  # noqa: E402
+from semantic_sql_guard.semantic.models import Metric  # noqa: E402
+from semantic_sql_guard.semantic.registry import load_registry, save_registry  # noqa: E402
 
 st.set_page_config(page_title="semantic-sql-guard 控制台", layout="wide")
 st.title("semantic-sql-guard 语义问数控制台")
