@@ -1,0 +1,64 @@
+# =========================================================
+# semantic-sql-guard 语义注册表
+# 统一业务口径：指标 + 业务术语 + 敏感表 + 行级权限映射
+# 高敏感指标必须「先注册、后查询」，未注册指标默认被拦截
+# =========================================================
+
+metrics:
+  - id: region_revenue
+    name: 区域营收
+    aliases: [区域销售额, 各省营收, 区域收入]
+    table: sales
+    measure: amount
+    agg: SUM
+    dim_columns: [region, quarter]
+    sensitive: false
+    max_value: 100000000
+    description: 按区域 / 季度汇总销售营收
+
+  - id: region_order_count
+    name: 区域订单量
+    aliases: [订单量, 订单数, 各省订单]
+    table: sales
+    measure: order_id
+    agg: COUNT
+    dim_columns: [region, quarter]
+    sensitive: false
+    max_value: 100000
+    description: 按区域 / 季度统计订单数量
+
+  - id: employee_salary_total
+    name: 员工薪酬总额
+    aliases: [工资总额, 人力成本, 薪酬总额, 薪酬]
+    table: hr_salary
+    measure: monthly_salary
+    agg: SUM
+    dim_columns: [dept]
+    sensitive: true
+    max_value: 200000000
+    description: 按部门汇总月度薪酬（敏感表）
+
+# ---- 业务术语词典：自然语言词 → 列 / 值 ----
+terms:
+  - { word: 华东, column: region, value: "华东" }
+  - { word: 华北, column: region, value: "华北" }
+  - { word: 华南, column: region, value: "华南" }
+  - { word: 华中, column: region, value: "华中" }
+  - { word: 一季度, column: quarter, value: "2026Q1" }
+  - { word: 二季度, column: quarter, value: "2026Q2" }
+  - { word: 三季度, column: quarter, value: "2026Q3" }
+  - { word: 研发部, column: dept, value: "研发" }
+  - { word: 销售一部, column: dept, value: "销售" }
+
+# ---- 敏感表：仅允许白名单角色访问，其余角色直接拦截 ----
+sensitive_tables: [hr_salary, bank_account]
+sensitive_allowed_roles: [hr, national]
+
+# ---- 行级权限：role → 允许访问的 region 值 ----
+# 对带 region 维度的表（如 sales），检索阶段直接按角色过滤行
+row_permission:
+  column: region
+  role_values:
+    east: [华东, 华北]
+    south: [华南, 华中]
+    national: [华东, 华北, 华南, 华中]

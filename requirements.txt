@@ -1,0 +1,14 @@
+fastapi>=0.110,<0.116
+uvicorn>=0.29
+pydantic>=2.6
+pydantic-settings>=2.2
+sqlglot>=23.0
+PyYAML>=6.0
+httpx>=0.27
+pytest>=8.0
+
+# 可选（默认不安装，装了才启用对应能力）
+# psycopg[binary]>=3.1  # PostgreSQL 数仓适配
+# PyMySQL>=1.1          # MySQL 数仓适配
+# litellm>=1.40         # 未注册指标的候选 SQL 生成
+# streamlit>=1.35       # 轻量可视化后台

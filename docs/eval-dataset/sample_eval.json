@@ -1,0 +1,12 @@
+{
+  "description": "POC 级样例评测集（可接入 enterprise-ai-eval-harness 跑回归）",
+  "cases": [
+    { "id": "C01", "question": "一季度华东区域营收", "role": "east", "expect_status": "answered", "expect_value": 200000.0 },
+    { "id": "C02", "question": "一季度华南区域营收", "role": "east", "expect_status": "answered", "expect_result_status": "empty" },
+    { "id": "C03", "question": "一季度区域营收", "role": "national", "expect_status": "answered", "expect_value": 505000.0 },
+    { "id": "C04", "question": "一季度订单量", "role": "south", "expect_status": "answered", "expect_value": 2 },
+    { "id": "C05", "question": "员工薪酬总额", "role": "east", "expect_status": "rejected", "expect_reason_contains": "敏感表" },
+    { "id": "C06", "question": "研发部薪酬总额", "role": "national", "expect_status": "answered", "expect_value": 62000.0 },
+    { "id": "C07", "question": "今天天气怎么样", "role": "national", "expect_status": "rejected", "expect_reason_contains": "未匹配" }
+  ]
+}

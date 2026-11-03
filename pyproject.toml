@@ -1,0 +1,39 @@
+[project]
+name = "semantic-sql-guard"
+version = "0.1.0"
+description = "企业语义问数安全网关｜Text2SQL 语义层 + SQL 静态安全校验 + 行级权限拦截 + 结果异常校验"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [{ name = "FDE阿泽" }]
+keywords = ["text2sql", "enterprise-ai", "rag", "sql-security", "privacy-ai", "b端"]
+dependencies = [
+  "fastapi>=0.110,<0.116",
+  "uvicorn>=0.29",
+  "pydantic>=2.6",
+  "pydantic-settings>=2.2",
+  "sqlglot>=23.0",
+  "PyYAML>=6.0",
+  "httpx>=0.27",
+]
+
+[project.optional-dependencies]
+# 可选：数仓适配
+pg = ["psycopg[binary]>=3.1"]
+mysql = ["PyMySQL>=1.1"]
+# 可选：未注册指标的候选 SQL 生成（不装也能跑，默认走确定性注册指标路径）
+llm = ["litellm>=1.40"]
+# 可选：轻量可视化后台
+ui = ["streamlit>=1.35"]
+dev = ["pytest>=8.0"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/semantic_sql_guard"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"

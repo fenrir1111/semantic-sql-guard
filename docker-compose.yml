@@ -1,0 +1,33 @@
+services:
+  semantic-sql-guard:
+    build: .
+    container_name: semantic-sql-guard
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=sqlite:///./data/business.db
+      - REGISTRY_PATH=./data/registry.yaml
+      - AUDIT_LOG_PATH=./data/audit.log
+      - LLM_ENABLED=false
+    volumes:
+      - ./data:/app/data
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request;urllib.request.urlopen('http://127.0.0.1:8000/health')"]
+      interval: 10s
+      timeout: 3s
+      retries: 3
+    restart: unless-stopped
+
+  # 生产环境可把业务库指向 PostgreSQL/数仓（POC 默认用内嵌 SQLite，零配置即跑）
+  # business-db:
+  #   image: postgres:16
+  #   environment:
+  #     POSTGRES_PASSWORD: guard123
+  #     POSTGRES_DB: biz
+  #   ports:
+  #     - "5432:5432"
+  #   volumes:
+  #     - pgdata:/var/lib/postgresql/data
+
+# volumes:
+#   pgdata:
