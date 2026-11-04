@@ -7,6 +7,12 @@
 > 属于【enterprise-ai-stack】B端私有化 AI 交付底座合集
 > 👉 总入口：https://github.com/fenrir1111/enterprise-ai-stack
 
+## 🚀 运行效果（真实截图）
+
+输入「一季度华东区域营收」、角色 `east` → 生成 SQL **已内联行级权限** `region IN ('华东','华北')`，结果 200000.0：
+
+![semantic-sql-guard 语义问数控制台 · 真实运行](docs/screenshots/sql-guard-02-query-result.png)
+
 ## 一句话简介
 解决 Text2SQL 投产三大杀手：**口径不一致、越权查询、幻觉危险 SQL**。
 内置指标注册表、业务术语词典、SQL 静态审计、结果异常校验、慢查询/行级权限拦截，
@@ -90,9 +96,7 @@ Q: 今天天气怎么样        角色: national
 
 ### 1. 语义问数控制台 · 自然语言查询
 
-在控制台输入「一季度华东区域营收」、角色选 `east`，点「查询」——右侧直接看到生成 SQL 里**已经带上行级权限条件**（`region IN ('华东','华北')`），以及结果校验后的数值：
-
-![语义问数控制台查询结果](docs/screenshots/sql-guard-02-query-result.png)
+在控制台输入「一季度华东区域营收」、角色选 `east`，点「查询」——右侧直接看到生成 SQL 里**已经带上行级权限条件**（`region IN ('华东','华北')`），以及结果校验后的数值（见文首「🚀 运行效果」）：
 
 ### 2. 语义配置 · 指标注册表（口径统一的地方）
 
