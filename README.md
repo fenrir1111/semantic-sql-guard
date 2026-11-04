@@ -13,6 +13,12 @@
 
 ![semantic-sql-guard 语义问数控制台 · 真实运行](docs/screenshots/sql-guard-02-query-result.png)
 
+## 🎬 一条命令跑通（真实终端录制）
+
+`make demo` 一条命令跑通全链路（**真实终端录制**，非模拟）：语义命中 → 行级权限内联 → 敏感表拦截 → 审计留痕：
+
+![semantic-sql-guard 一条命令跑通 · 真实终端录制](docs/quickstart.gif)
+
 ## 一句话简介
 解决 Text2SQL 投产三大杀手：**口径不一致、越权查询、幻觉危险 SQL**。
 内置指标注册表、业务术语词典、SQL 静态审计、结果异常校验、慢查询/行级权限拦截，
@@ -86,6 +92,9 @@ curl -s localhost:8000/ask -H 'Content-Type: application/json' \
 ```
 
 ## 真实运行效果（`make demo` 真实输出，节选）
+
+> 想看**动画版**（真实终端逐行录制）见文首「🎬 一条命令跑通」。
+
 ```text
 Q: 一季度华东区域营收    角色: east
 SQL: SELECT SUM(amount) AS value FROM sales WHERE quarter='2026Q1' AND region IN ('华东','华北')
