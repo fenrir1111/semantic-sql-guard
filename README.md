@@ -29,6 +29,12 @@
 3. **结果异常校验**：空结果、聚合 NULL、数值超限、行数过多自动标记或拦截；全链路审计留痕，每条查询可追溯到「问句 → 语义 → SQL → 结果 → 角色 → 时间」。
 
 ## 架构简图
+
+![semantic-sql-guard 架构图](docs/semantic-sql-guard-architecture.png)
+
+<details>
+<summary>文本版架构简图</summary>
+
 ```
 用户自然语言 → 身份/角色 → 语义层匹配指标注册表 & 术语词典
         → 确定性生成候选 SQL（含行级权限条件）
@@ -37,6 +43,9 @@
         → 结果异常校验
         → 返回结果 & 全链路审计落库
 ```
+
+</details>
+
 
 ## 快速启动
 ### 方式一：uv（推荐，本地）
@@ -174,6 +183,7 @@ Text2SQL 落地、数据产品、数据中台、风控类 AI 交付 FDE。
 
 ## 参与共建
 欢迎提交 Issue（反馈 bug、补充行业指标样例）、PR（适配更多数仓、新增规则模板）。有效贡献在 README 致谢栏署名。
+详细流程见 [CONTRIBUTING.md](CONTRIBUTING.md)。
 
 ## License
 MIT License，可自由使用、二次修改、商用；当前为 v0 版本，生产使用请自行评估风险。
